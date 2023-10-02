@@ -11,14 +11,14 @@ export class DataService {
     ){}
     async query(body: DataQueryDto){
         try{
-            const {data} = await this.httpService.get(`${this.configService.get('BACKEND_PYTHON_SERVICE')}?from=${body.from}&to=${body.to}&type=${body.type}`, {
+            const response = await this.httpService.get(`${this.configService.get('BACKEND_PYTHON_SERVICE')}?from=${body.from}&to=${body.to}&type=${body.type}`, {
                 headers:{
                     Authorization: `Bearer ${this.configService.get('SECRETE_PYTHON_KEY')}`
                 }
             })
             return {
-                status:200,
-                message: data
+                status:response.status,
+                message: response.data
             }
         }
         catch(e){
